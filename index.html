@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>API da Escola</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>💜 API da Escola 💚</h1>
+
+        <p>
+            Sistema simples para visualizar
+            informações da escola.
+        </p>
+
+        <button onclick="mostrarAlunos()">
+            Mostrar Alunos
+        </button>
+
+        <button onclick="mostrarCursos()">
+            Mostrar Cursos
+        </button>
+
+        <button onclick="mostrarProfessor()">
+            Mostrar Professor
+        </button>
+
+        <div id="resultado"></div>
+
+    </div>
+
+<script>
+
+    const resultado =
+        document.getElementById("resultado");
+
+    // =========================
+    // ALUNOS
+    // =========================
+
+    function mostrarAlunos() {
+
+        fetch("http://localhost:3000/alunos")
+
+        .then(response => response.json())
+
+        .then(dados => {
+
+            let texto =
+                "<h2>📚 Alunos</h2>";
+
+            dados.forEach(aluno => {
+
+                texto += `
+
+                <div class="card">
+
+                    <p><strong>ID:</strong> ${aluno.id}</p>
+
+                    <p><strong>Nome:</strong> ${aluno.nome}</p>
+
+                    <p><strong>Idade:</strong> ${aluno.idade}</p>
+
+                </div>
+
+                `;
+
+            });
+
+            resultado.innerHTML = texto;
+
+        });
+
+    }
+
+    // =========================
+    // CURSOS
+    // =========================
+
+    function mostrarCursos() {
+
+        fetch("http://localhost:3000/cursos")
+
+        .then(response => response.json())
+
+        .then(dados => {
+
+            let texto =
+                "<h2>🎓 Cursos</h2>";
+
+            dados.forEach(curso => {
+
+                texto += `
+
+                <div class="card">
+
+                    <p><strong>ID:</strong> ${curso.id}</p>
+
+                    <p><strong>Curso:</strong> ${curso.curso}</p>
+
+                </div>
+
+                `;
+
+            });
+
+            resultado.innerHTML = texto;
+
+        });
+
+    }
+
+    // =========================
+    // PROFESSOR
+    // =========================
+
+    function mostrarProfessor() {
+
+        fetch("http://localhost:3000/professor")
+
+        .then(response => response.json())
+
+        .then(dados => {
+
+            resultado.innerHTML = `
+
+            <h2>👨‍🏫 Professor</h2>
+
+            <div class="card">
+
+                <p><strong>Nome:</strong>
+                ${dados.nome}</p>
+
+                <p><strong>Disciplina:</strong>
+                ${dados.disciplina}</p>
+
+            </div>
+
+            `;
+
+        });
+
+    }
+
+</script>
+
+</body>
+</html>
